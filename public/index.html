@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username</title>
+    <meta name="description" content="example">
+    <meta property="og:title" content="Username">
+    <meta property="og:description" content="example">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com/">
+    <meta property="og:image" content="https://example.com/example-image.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="music-player.css">
+    <link rel="stylesheet" href="level-up.css"> <!-- New CSS for level-up UI -->
+
+ 
+    <script defer src="script.js"></script>
+    <script defer src="music-player.js"></script>
+    <script async src="https://ss.mrmnd.com/banner.js"></script>
+</head>
+ 
+<body>
+    <div class="container">
+        <!-- Title Section -->
+        <header>
+            <h1 class="title">Username</h1>
+        </header>
+        
+
+        <!-- About Me Section -->
+        <section class="about-me">
+            <div class="profile-pic">
+                <img src="https://example.com/example-image.png" alt="Profile Picture">
+            </div>
+            <div class="description-box">
+                <p>
+                   Example Hello World
+                </p>
+            </div>
+        </section>
+
+        <!-- Discord Status Section -->
+        <section class="discord-status">
+            <h2>My Discord Status</h2>
+            <div class="discord-container">
+                <img src="https://discord.c99.nl/widget/theme-1/1114987033648185354.png" alt="Discord Status">
+            </div>
+        </section>
+
+        <!-- Spotify Profile Section -->
+        <section class="spotify-profile">
+            <h2>My Spotify</h2>
+            <div class="spotify-container">
+                <a href="https://github.com/kittinan/spotify-github-profile">
+                    <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31vfzhwgc4ufxj5ob6fmpzq7wnca&cover_image=true&theme=default&show_offline=true&background_color=121212&interchange=false&bar_color=ff58c4&bar_color_cover=false" alt="Spotify GitHub Profile">
+                </a>
+            </div>
+        </section>
+ 
+        <!-- Languages I Know Section -->
+        <section class="languages">
+            <h2>The Languages I Know</h2>
+ 
+            <!-- Frontend Section -->
+            <div class="language-category">
+                <h3>Frontend</h3>
+                <div class="languages-grid">
+                    <div class="language" data-title="HTML" data-description="The standard markup language for creating web pages.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174854.png" alt="HTML">
+                        <p>HTML</p>
+                    </div>
+                    <div class="language" data-title="CSS" data-description="Stylesheets for designing beautiful, responsive websites.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS">
+                        <p>CSS</p>
+                    </div>
+                    <div class="language" data-title="JavaScript" data-description="A versatile language for building interactive web pages.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
+                        <p>JavaScript</p>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Backend Section -->
+            <div class="language-category">
+                <h3>Backend</h3>
+                <div class="languages-grid">
+                    <div class="language" data-title="Python" data-description="A versatile language used for AI, web development, and data science.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python">
+                        <p>Python</p>
+                    </div>
+                    <div class="language" data-title="Node.js" data-description="JavaScript runtime for server-side development.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/919/919825.png" alt="Node.js">
+                        <p>Node.js</p>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Frameworks Section -->
+            <div class="language-category">
+                <h3>Frameworks</h3>
+                <div class="languages-grid">
+                    <div class="language" data-title="Flask" data-description="A lightweight Python framework for building web applications.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968313.png" alt="Flask">
+                        <p>Flask</p>
+                    </div>
+                    <div class="language" data-title="React" data-description="A JavaScript library for building user interfaces.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/919/919851.png" alt="React">
+                        <p>React</p>
+                    </div>
+                    <div class="language" data-title="Django" data-description="A high-level Python web framework for rapid development.">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Django">
+                        <p>Django</p>
+                    </div>
+                    <div class="language" data-title="Vue.js" data-description="A progressive JavaScript framework for building user interfaces.">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" alt="Vue.js">
+                        <p>Vue.js</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+ 
+        <!-- Links Section -->
+        <section class="links">
+            <button class="btn" onclick="location.href='chronicles.html'">My Chronicles</button>
+            <button class="btn" onclick="location.href='chat-wip.html'">Chat with Me</button>
+            <a href="404.html" class="btn-link">Join My Discord Server</a>
+            <a href="https://github.com/Vampelium" class="btn-link">View GitHub</a>
+        </section>
+
+ 
+        <!-- Language Info Popup -->
+        <div id="language-popup" class="popup" style="display: none;">
+            <div class="popup-content">
+                <h3 id="language-title">Language Name</h3>
+                <p id="language-description">Language description goes here.</p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Mobile Expandable Circle -->
+    <div class="mobile-circle" onclick="this.classList.toggle('expanded')">
+        <div class="message-board" id="weeklyMessage"></div>
+    </div>
+
+    <!-- Custom Message Box -->
+    <div id="customMessageBox" class="custom-message" style="display: none;">
+        <p id="customMessageText"></p>
+    </div>
+
+    <!-- Level-Up Widget -->
+    <div class="level-status" id="levelBox" style="display: none;">
+        Level <span id="currentLevel">1</span> | XP: <span id="currentXP">0</span>
+        <div class="level-bar">
+            <div class="level-fill" id="levelFill"></div>
+        </div>
+    </div>
+
+    <!-- Level-Up JS -->
+    <script>
+        let userXP = 0;
+        let userLevel = 1;
+        let eggsFound = [];
+
+        const easterEggs = {
+            "HTML": "You found the foundation of the web! (+20 XP)",
+            "CSS": "Style queen! You've unlocked CSS secrets! (+20 XP)",
+            "JavaScript": "Scripting goddess vibes! (+30 XP)",
+            "Python": "Slithering into skills like a boss! (+30 XP)",
+            "Vue.js": "You're seeing the view from the top! (+30 XP)"
+        };
+
+        function showMessage(message) {
+            const box = document.getElementById('customMessageBox');
+            const text = document.getElementById('customMessageText');
+            text.textContent = message;
+            box.style.display = 'block';
+            box.classList.remove('fade');
+            void box.offsetWidth;
+            box.classList.add('fade');
+            setTimeout(() => { box.style.display = 'none'; }, 3000);
+        }
+
+        function updateLevel() {
+            if (userXP >= userLevel * 100) {
+                userLevel++;
+                showMessage(`Level up! You're now Level ${userLevel}! Keep slaying, coding queen!`);
+            }
+            showLevelBox();
+        }
+
+        function showLevelBox() {
+            const levelBox = document.getElementById('levelBox');
+            const levelFill = document.getElementById('levelFill');
+            const currentLevel = document.getElementById('currentLevel');
+            const currentXP = document.getElementById('currentXP');
+            levelBox.style.display = 'block';
+            currentLevel.textContent = userLevel;
+            currentXP.textContent = userXP;
+            let progress = Math.min((userXP % 100) / 100 * 100, 100);
+            levelFill.style.width = progress + "%";
+        }
+
+        document.querySelectorAll('.language').forEach(lang => {
+            lang.addEventListener('click', () => {
+                const langName = lang.getAttribute('data-title');
+                if (easterEggs[langName] && !eggsFound.includes(langName)) {
+                    eggsFound.push(langName);
+                    let gainedXP = parseInt(easterEggs[langName].match(/\+(\d+)/)[1]);
+                    userXP += gainedXP;
+                    showMessage(`Easter Egg: ${easterEggs[langName]} | Total XP: ${userXP}`);
+                    updateLevel();
+                }
+            });
+        });
+
+        const bonusPaths = ["chronicles.html", "chat.html"];
+        bonusPaths.forEach(path => {
+            if (window.location.href.includes(path)) {
+                userXP += 50;
+                updateLevel();
+            }
+        });
+
+       
+    </script>
+      <script src="script.js"></script
+</body>
+</html>
+

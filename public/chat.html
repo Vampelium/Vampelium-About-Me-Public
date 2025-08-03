@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat With Me</title>
+    <style>
+        /* General Styles */
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+ 
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+ 
+        /* Title Section */
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff7eb3, #ff65a3, #d583ff, #ff65a3);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: text-gradient 3s infinite linear;
+        }
+ 
+        @keyframes text-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+ 
+            50% {
+                background-position: 100% 50%;
+            }
+ 
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+ 
+        /* Description Box */
+        .description-box {
+            border: 3px solid;
+            border-image-source: linear-gradient(90deg, #ff7eb3, #ff65a3, #d583ff, #ff65a3);
+            border-image-slice: 1;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            animation: outline-gradient 6s infinite linear;
+        }
+ 
+        @keyframes outline-gradient {
+            0% {
+                border-image-source: linear-gradient(90deg, #ff7eb3, #ff65a3, #d583ff, #ff65a3);
+            }
+ 
+            50% {
+                border-image-source: linear-gradient(90deg, #d583ff, #ff65a3, #ff7eb3, #ff65a3);
+            }
+ 
+            100% {
+                border-image-source: linear-gradient(90deg, #ff7eb3, #ff65a3, #d583ff, #ff65a3);
+            }
+        }
+ 
+        /* Languages Section */
+        .languages h2 {
+            margin-top: 40px;
+            font-size: 2.5rem;
+        }
+ 
+        .language-category {
+            margin: 20px 0;
+        }
+ 
+        .language-category h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ff65a3;
+        }
+ 
+        .languages-grid {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+ 
+        .language {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+ 
+        .language img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+ 
+        .language:hover {
+            transform: scale(1.1);
+        }
+ 
+        /* Links Section - Fixed Alignment */
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+ 
+        .links .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff7eb3;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            min-width: 150px;
+        }
+ 
+        .links .btn:hover {
+            background: #ff65a3;
+            transform: scale(1.05);
+        }
+ 
+        .links .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            color: #ff7eb3;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            transition: color 0.3s ease, transform 0.2s ease;
+            min-width: 150px;
+        }
+ 
+        .links .btn-link:hover {
+            color: #ff65a3;
+            transform: scale(1.05);
+        }
+ 
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+ 
+        .popup-content {
+            background: #222;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #ff7eb3;
+            max-width: 400px;
+        }
+ 
+        .popup-content button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #ff7eb3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+ 
+        .popup-content button:hover {
+            background: #ff65a3;
+        }
+ 
+        /* Chat specific styles */
+        #chat-container {
+            background: #111;
+            border: 2px solid #ff7eb3;
+            border-radius: 10px;
+            padding: 10px;
+            height: 400px;
+            overflow-y: auto;
+            text-align: left;
+            margin: 20px 0;
+        }
+ 
+        .chat-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+ 
+        .chat-message.user {
+            background: #222;
+            text-align: right;
+        }
+ 
+        .chat-message.ai {
+            background: #333;
+            text-align: left;
+        }
+ 
+        #chat-input {
+            width: calc(100% - 100px);
+            padding: 10px;
+            border: 2px solid #ff7eb3;
+            border-radius: 10px;
+            margin-right: 10px;
+            background: #111;
+            color: #fff;
+        }
+ 
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            background: #ff7eb3;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+ 
+        #send-button:hover {
+            background: #ff65a3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="container">
+        <div class="title">Chat With Me</div>
+        <div class="description-box">
+            <p>Welcome to our AI-powered chat experience! Our AI uses intent intelligence to match your keywords with our knowledge base. Just type your message below and let the magic happen!</p>
+        </div>
+ 
+        <!-- Chat Container -->
+        <div id="chat-container"></div>
+ 
+        <!-- Chat Input Section -->
+        <div>
+            <input type="text" id="chat-input" placeholder="Type your message here..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+ 
+    <!-- Linking the JavaScript files -->
+    <script src="keyword.js"></script>
+    <script src="ai_model.js"></script>
+</body>
+ 
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Denied</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: hotpink;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2em;
+      margin-bottom: 40px;
+    }
+    .button-group {
+      display: flex;
+      gap: 15px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 1em;
+      border: 2px solid hotpink;
+      background: transparent;
+      color: hotpink;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background-color: hotpink;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Access Denied</h1>
+  <p>You do not have access to this page. Try the secret sequence to unlock it.</p>
+  <div class="button-group">
+    <button onclick="pressButton('L')">Left</button>
+    <button onclick="pressButton('R')">Right</button>
+  </div>
+  <p id="feedback" style="margin-top: 30px; font-weight: bold;"></p>
+
+  <script>
+    const correctSequence = ['L', 'L', 'R', 'L', 'R', 'R'];
+    let userSequence = [];
+
+    function pressButton(choice) {
+      userSequence.push(choice);
+      document.getElementById("feedback").textContent = "Checking pattern...";
+
+      if (userSequence.length === correctSequence.length) {
+        const isCorrect = correctSequence.every((val, index) => val === userSequence[index]);
+        if (isCorrect) {
+          document.getElementById("feedback").textContent = "Access Granted! Redirecting...";
+          setTimeout(() => {
+            window.location.href = "/test.html";
+          }, 1500);
+        } else {
+          document.getElementById("feedback").textContent = "Access Denied. Try again.";
+          userSequence = [];
+        }
+      }
+    }
+  </script>
+</body>
+</html>
+

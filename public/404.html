@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Lost in the Pink Void</title>
+  <style>
+    :root {
+      --bg-black: #000;
+      --pink: #ff4fae;
+      --pink-light: #ff94d8;
+      --pink-neon: #ff6bcb;
+      --pink-dark: #d41f7d;
+    }
+
+    /* --- GLOBAL RESET --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-black);
+      overflow: hidden;
+      color: var(--pink-light);
+      text-align: center;
+      position: relative;
+      animation: flicker 4s infinite steps(130);
+    }
+
+    /* ------------------------- */
+    /*  STATIC / GLITCH OVERLAYS */
+    /* ------------------------- */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.05) 0 2px,
+        transparent 2px 4px
+      );
+      mix-blend-mode: overlay;
+      animation: scan 0.25s linear infinite;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 15;
+      background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyJyBoZWlnaHQ9JzInPjwvc3ZnPg==");
+      background-size: 3px 3px;
+      animation: noise 1s steps(12) infinite;
+      opacity: 0.25;
+    }
+
+    /* --- NEW GLITCH OVERLAY --- */
+    .glitch-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 25;
+      mix-blend-mode: screen;
+      opacity: 0;
+      animation: glitch-overlay 8s infinite;
+    }
+
+    .glitch-overlay::before,
+    .glitch-overlay::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        var(--pink) 5%,
+        transparent 5.5%,
+        transparent 20%,
+        var(--pink-neon) 20.5%,
+        transparent 21%,
+        transparent 40%,
+        var(--pink-light) 40.1%,
+        transparent 40.5%,
+        transparent 60%,
+        var(--pink-dark) 60.1%,
+        transparent 60.5%,
+        transparent 80%,
+        var(--pink) 80.5%,
+        transparent 81%
+      );
+      transform: translateX(-100%);
+      animation: glitch-slide 6s infinite;
+    }
+
+    .glitch-overlay::after {
+      animation-delay: -3s;
+      transform: translateX(100%);
+    }
+
+    @keyframes glitch-overlay {
+      0%, 90%, 100% { opacity: 0; }
+      91%, 93%, 95%, 97% { opacity: 0.8; }
+      92%, 94%, 96%, 98% { opacity: 0; }
+    }
+
+    @keyframes glitch-slide {
+      0% { transform: translateX(-100%); }
+      5% { transform: translateX(100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes scan { 0% { transform: translateY(0); } 100% { transform: translateY(4px); } }
+    @keyframes noise { 0%,100% { transform: translate(0); } 10% { transform: translate(-2%, -2%); } 20% { transform: translate(2%, -3%); } 30% { transform: translate(-1%, 3%);} 40% { transform: translate(3%,2%);} 50% { transform: translate(-3%,1%);} 60% { transform: translate(2%,-1%);} 70%{transform:translate(-2%,3%);} 80%{transform:translate(1%,-3%);} 90%{transform:translate(-3%,-2%);} }
+    @keyframes flicker { 0%,100%{ opacity:1;} 98%{opacity:0.93;} 99%{opacity:0.83;} }
+
+    /* --- GLITCH TEXT --- */
+    .glitch {
+      position: relative;
+      font-size: clamp(4rem, 15vw, 14rem);
+      font-weight: 900;
+      line-height: 1;
+      color: var(--pink);
+      letter-spacing: 2px;
+      animation: glitch-skew 3s infinite ease-in-out alternate;
+      z-index: 20;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--pink-light);
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--pink);
+      animation: glitch-anim2 2s infinite linear alternate;
+    }
+
+    @keyframes glitch-skew { 0%{transform:skew(0deg);} 20%{transform:skew(5deg);} 40%{transform:skew(-4deg);} 60%{transform:skew(3deg);} 80%{transform:skew(-5deg);} 100%{transform:skew(0deg);} }
+
+    @keyframes glitch-anim { 0%{ clip-path:polygon(0 2%,100% 2%,100% 20%,0 20%);} 20%{clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%);left:4px;} 40%{clip-path:polygon(0 48%,100% 48%,100% 68%,0 68%);left:-2px;} 60%{clip-path:polygon(0 75%,100% 75%,100% 95%,0 95%);left:3px;} 80%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);left:-3px;} 100%{clip-path:polygon(0 25%,100% 25%,100% 45%,0 45%);left:2px;} }
+
+    @keyframes glitch-anim2 { 0%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);left:-3px;} 20%{clip-path:polygon(0 2%,100% 2%,100% 20%,0 20%);left:2px;} 40%{clip-path:polygon(0 35%,100% 35%,100% 55%,0 55%);left:-4px;} 60%{clip-path:polygon(0 25%,100% 25%,100% 45%,0 45%);left:1px;} 80%{clip-path:polygon(0 75%,100% 75%,100% 95%,0 95%);left:4px;} 100%{clip-path:polygon(0 48%,100% 48%,100% 68%,0 68%);left:-2px;} }
+
+    /* --- STORY SECTION --- */
+    .story { max-width: 700px; margin-top: 2rem; font-size: 1.1rem; line-height: 1.6; color: var(--pink-light); z-index: 20; }
+
+    /* --- NEW GLITCHED SUBTEXT --- */
+    .glitch-subtext {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      color: var(--pink-neon);
+      position: relative;
+      display: inline-block;
+      animation: subtext-glitch 4s infinite;
+      z-index: 20;
+    }
+
+    .glitch-subtext::before,
+    .glitch-subtext::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+    }
+
+    .glitch-subtext::before {
+      animation: subtext-shift 0.3s infinite;
+      color: var(--pink);
+      z-index: -1;
+    }
+
+    .glitch-subtext::after {
+      animation: subtext-shift 0.3s infinite reverse;
+      color: var(--pink-light);
+      z-index: -1;
+    }
+
+    @keyframes subtext-glitch {
+      0%, 95% { opacity: 1; transform: translate(0); }
+      95.5% { opacity: 0.5; transform: translate(2px, -2px); }
+      96% { opacity: 1; transform: translate(-2px, 2px); }
+      96.5% { opacity: 0.7; transform: translate(0); }
+      97% { opacity: 1; transform: translate(1px, -1px); }
+      100% { opacity: 1; transform: translate(0); }
+    }
+
+    @keyframes subtext-shift {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-1px, 1px); }
+      40% { transform: translate(-1px, -1px); }
+      60% { transform: translate(1px, 1px); }
+      80% { transform: translate(1px, -1px); }
+    }
+
+    /* --- CORRUPTED TEXT --- */
+    .corrupted {
+      display: inline-block;
+      position: relative;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: var(--pink-dark);
+      letter-spacing: 0.1em;
+      animation: corrupt 5s infinite;
+    }
+
+    @keyframes corrupt {
+      0%, 95% { content: attr(data-text); }
+      96% { content: "ER̸R̴O̶R̷"; }
+      97% { content: "4̵0̸4̶"; }
+      98% { content: "N̴U̷L̶L̸"; }
+      99% { content: "V̸O̴I̵D̶"; }
+      100% { content: attr(data-text); }
+    }
+
+    /* --- BACK HOME BUTTON --- */
+    .home-btn {
+      margin-top: 3rem;
+      padding: 12px 28px;
+      border: 2px solid var(--pink);
+      border-radius: 50px;
+      font-size: 1rem;
+      color: var(--pink);
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color .3s ease-out;
+      z-index: 20;
+    }
+    .home-btn::before{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--pink);z-index:-1;transition:transform .3s ease-out;transform:skewX(-20deg);} .home-btn:hover{color:var(--bg-black);} .home-btn:hover::before{transform:translateX(200%) skewX(-20deg);} 
+
+    /* ---------------------------------- */
+    /*  EYE EMOJI BLINK ANIMATION         */
+    /* ---------------------------------- */
+    .eye {
+      font-size: 6rem;
+      line-height: 1;
+      color: var(--pink-neon);
+      display: inline-block;
+      margin-top: 1rem;
+      animation: blink 3s 1.5s forwards;
+      transform-origin: center center;
+      z-index: 20;
+    }
+
+    @keyframes blink {
+      0%, 35% { transform: scaleY(1); }
+      36%, 46% { transform: scaleY(0.05); }
+      47%, 100% { transform: scaleY(1); }
+    }
+
+    /* --- FLOATING GLITCH PARTICLES --- */
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 20px;
+      background: var(--pink);
+      opacity: 0;
+      animation: float-particle 10s infinite;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 30%; animation-delay: 2s; background: var(--pink-light); }
+    .particle:nth-child(3) { left: 50%; animation-delay: 4s; }
+    .particle:nth-child(4) { left: 70%; animation-delay: 6s; background: var(--pink-neon); }
+    .particle:nth-child(5) { left: 90%; animation-delay: 8s; }
+
+    @keyframes float-particle {
+      0%, 100% { opacity: 0; transform: translateY(100vh) rotate(0deg); }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(720deg); }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Glitch Overlay -->
+  <div class="glitch-overlay"></div>
+  
+  <!-- Floating Particles -->
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <h1 class="glitch" data-text="404">404</h1>
+  <div class="glitch-subtext" data-text="REALITY.EXE HAS STOPPED RESPONDING">REALITY.EXE HAS STOPPED RESPONDING</div>
+  
+  <span class="eye" id="eye">👁️</span>
+
+  <p class="story">
+    Oopsie-daisy, gorgeous! ✨ You've drifted off the glittery path and landed in the <em>Pink Void</em> a cosmic pocket where lost pages mingle...
+    <br><br>
+    <span class="corrupted" data-text="[SIGNAL_LOST]">[SIGNAL_LOST]</span>
+    <br><br>
+    But don't worry, queen: the doorway home is just a click away.
+  </p>
+  
+  <button class="home-btn" onclick="goHome()">Take Me Home 🏠</button>
+
+  <script>
+    function goHome() {
+      window.location.href = "/";
+    }
+
+    // Mini-glitch burst on mouse movement
+    const glitchHeading = document.querySelector('.glitch');
+    const overlay = document.querySelector('.glitch-overlay');
+    let gTimeout;
+    
+    window.addEventListener('mousemove', () => {
+      clearTimeout(gTimeout);
+      overlay.style.animation = 'none';
+      setTimeout(() => {
+        overlay.style.animation = 'glitch-overlay 8s infinite';
+      }, 10);
+      
+      gTimeout = setTimeout(() => {
+        overlay.style.animation = 'glitch-overlay 8s infinite';
+      }, 100);
+    });
+
+    // Random glitch text corruption
+    const corrupted = document.querySelector('.corrupted');
+    const glitchTexts = ['[SIGNAL_LOST]', '[NULL_POINTER]', '[VOID_BREACH]', '[PINK_OVERFLOW]', '[404_DREAMS]'];
+    
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        corrupted.textContent = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
+        corrupted.style.transform = `translateX(${Math.random() * 4 - 2}px)`;
+      }
+    }, 2000);
+  </script>
+</body>
+</html>

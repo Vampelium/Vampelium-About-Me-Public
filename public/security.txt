@@ -1,0 +1,10 @@
+# security.txt for Vampelium
+Contact: mailto:security@vampelium.com
+Encryption: https://vampelium.com/pgp-key.txt
+Acknowledgements: https://vampelium.com/hall-of-fame
+Preferred-Languages: en, ja
+Canonical: https://vampelium.com/.well-known/security.txt
+Policy: https://vampelium.com/security-policy
+
+# If you find a vulnerability, please report it responsibly!
+# We care about user safety and sexy server health!

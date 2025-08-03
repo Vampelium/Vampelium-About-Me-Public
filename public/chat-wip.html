@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - A New Way to Chat</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #F91880; /* A vibrant pink */
+            --background-color: #000000;
+            --text-color: #E7E9EA;
+            --glass-bg: rgba(25, 25, 25, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background glowing shapes for depth */
+        .background-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .shape1 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary-color), transparent 60%);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+            opacity: 0.3;
+            animation: move-glow1 20s infinite alternate ease-in-out;
+        }
+
+        .shape2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary-color), transparent 70%);
+            border-radius: 50%;
+            bottom: -150px;
+            right: -150px;
+            opacity: 0.2;
+            animation: move-glow2 25s infinite alternate ease-in-out;
+        }
+
+        @keyframes move-glow1 {
+            from {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            to {
+                transform: translate(100px, 50px) rotate(45deg);
+            }
+        }
+
+        @keyframes move-glow2 {
+            from {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            to {
+                transform: translate(-80px, -60px) rotate(-60deg);
+            }
+        }
+
+        /* The main glass container */
+        .glass-container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); /* For Safari */
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transform: perspective(1000px);
+            transition: transform 0.5s ease;
+        }
+        
+        .glass-container:hover {
+            transform: perspective(1000px) rotateY(1deg) scale(1.02);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+        }
+
+        p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .glass-container {
+                padding: 30px;
+            }
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-glow">
+        <div class="shape1"></div>
+        <div class="shape2"></div>
+    </div>
+
+    <div class="glass-container" id="glass-card">
+        <h1>Something new is coming...</h1>
+        <p>
+            We're building a special chat app so you can talk with me directly.
+            <br>
+            <span class="highlight">No more keywords, no more bots, no more AI.</span> Just real conversation.
+        </p>
+    </div>
+
+    <script>
+        // This script adds a subtle tilt effect on mouse move for better DX
+        const card = document.getElementById('glass-card');
+        const body = document.body;
+
+        body.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+
+            const xRotation = (clientY / innerHeight - 0.5) * -10; // Max 5deg tilt
+            const yRotation = (clientX / innerWidth - 0.5) * 10;   // Max 5deg tilt
+
+            card.style.transform = `perspective(1000px) rotateX(${xRotation}deg) rotateY(${yRotation}deg) scale(1.03)`;
+        });
+
+        body.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+        });
+    </script>
+
+</body>
+</html>

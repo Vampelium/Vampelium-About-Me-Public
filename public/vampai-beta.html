@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VampAI by Vampelium Dev</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --background-color: #0d0d0d;
+            --glass-background: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --primary-text-color: #f0f0f0;
+            --accent-color: #ff69b4; /* Hot Pink */
+            --accent-glow: 0 0 15px rgba(255, 105, 180, 0.6);
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* --- Mobile Scrolling Fix --- */
+        /* By setting html and body height to 100%, we create a stable layout container */
+        /* that doesn't resize when mobile browser UI (like the address bar) appears or disappears. */
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Changed from min-height: 100vh */
+            padding: 10px; /* Adjusted padding for better mobile view */
+            background-image: radial-gradient(circle at top right, rgba(255, 105, 180, 0.2) 0%, transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(255, 105, 180, 0.2) 0%, transparent 50%);
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 800px;
+            height: 100%; /* Changed from 90vh to fill the stable body container */
+            max-height: 800px;
+            display: flex;
+            flex-direction: column;
+            background: var(--glass-background);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+            flex-shrink: 0; /* Prevents header from shrinking */
+        }
+
+        .chat-header h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            text-shadow: var(--accent-glow);
+            letter-spacing: 1px;
+        }
+
+        .chat-header p {
+            font-size: 0.9rem;
+            color: var(--primary-text-color);
+            opacity: 0.7;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Custom scrollbar for a sleek look */
+        .chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-box::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+
+        .chat-message {
+            padding: 12px 18px;
+            border-radius: 15px;
+            max-width: 75%;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--accent-color);
+            color: #000;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary-text-color);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .ai-message.typing {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            animation: typing-bounce 1.2s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing-bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .chat-input-form {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0; /* Prevents input area from shrinking */
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary-text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #userInput:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+        }
+
+        #sendButton {
+            margin-left: 10px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--accent-color);
+            color: var(--background-color);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        #sendButton:hover {
+            box-shadow: var(--accent-glow);
+        }
+        
+        #sendButton:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>VampAI</h1>
+            <p>by Vampelium Dev</p>
+        </div>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-message ai-message">
+                Hey User! ✨ What's on your mind?
+            </div>
+        </div>
+        <form class="chat-input-form" id="chatForm">
+            <input type="text" id="userInput" placeholder="Type your message here..." autocomplete="off">
+            <button type="submit" id="sendButton">Send</button>
+        </form>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const chatForm = document.getElementById('chatForm');
+        const userInput = document.getElementById('userInput');
+        const chatBox = document.getElementById('chatBox');
+        const sendButton = document.getElementById('sendButton');
+
+        // --- API Configuration ---
+    // API endpoint (example, replace with your own backend)
+    const API_URL = 'https://example.com/api/vampai'; // Coming soon: custom host support
+
+
+        // --- Event Listener for Form Submission ---
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent page reload
+            const userMessage = userInput.value.trim();
+
+            if (!userMessage) return; // Don't send empty messages
+
+            // Display user's message
+            addMessageToBox(userMessage, 'user');
+            userInput.value = ''; // Clear input field
+            
+            // Disable input and button while AI is thinking
+            toggleInput(true);
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            try {
+                // --- Call Vampelium Dev AI ---
+                const aiResponse = await getGeminiResponse(userMessage);
+                
+                // Remove typing indicator
+                removeTypingIndicator();
+
+                // Display AI's response
+                addMessageToBox(aiResponse, 'ai');
+
+            } catch (error) {
+                console.error("Error fetching from Vampelium Dev AI:", error);
+                removeTypingIndicator();
+                addMessageToBox("Oops! Something went wrong, babe. Please try again.", 'ai');
+            } finally {
+                // Re-enable input and button
+                toggleInput(false);
+            }
+        });
+
+        /**
+         * Adds a message to the chat box UI.
+         * @param {string} message - The message content.
+         * @param {string} sender - 'user' or 'ai'.
+         */
+        function addMessageToBox(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message', `${sender}-message`);
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            scrollToBottom();
+        }
+
+        /**
+         * Shows a typing indicator in the chat box.
+         */
+        function showTypingIndicator() {
+            const typingElement = document.createElement('div');
+            typingElement.classList.add('chat-message', 'ai-message', 'typing');
+            typingElement.id = 'typing-indicator';
+            typingElement.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            chatBox.appendChild(typingElement);
+            scrollToBottom();
+        }
+        
+        /**
+         * Removes the typing indicator from the chat box.
+         */
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        /**
+         * Toggles the disabled state of the input field and send button.
+         * @param {boolean} isDisabled - True to disable, false to enable.
+         */
+        function toggleInput(isDisabled) {
+            userInput.disabled = isDisabled;
+            sendButton.disabled = isDisabled;
+        }
+
+        /**
+         * Scrolls the chat box to the very bottom.
+         */
+        function scrollToBottom() {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        /**
+         * Fetches a response from the Vampelium Dev AI API.
+         * @param {string} prompt - The user's input message.
+         * @returns {Promise<string>} - The AI's text response.
+         */
+        async function getGeminiResponse(prompt) {
+            const payload = {
+                prompt,
+                systemPrompt: 'You are Vampelium, a super fun, sassy, and sweet girly-girl AI bestie!',
+                generationConfig: { maxOutputTokens: 64 }
+            };
+
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
+
+            // Attempt to parse JSON first, fall back to plain text
+            const contentType = response.headers.get('content-type') || '';
+            const result = contentType.includes('application/json') ? await response.json() : await response.text();
+
+            if (typeof result === 'string') {
+                return result;
+            }
+
+            if (result && result.response) {
+                return result.response;
+            }
+
+            // Support Gemini-style structure { candidates: [{ content: { parts: [{ text }] } }] }
+            if (
+                result &&
+                Array.isArray(result.candidates) &&
+                result.candidates.length > 0 &&
+                result.candidates[0].content &&
+                Array.isArray(result.candidates[0].content.parts) &&
+                result.candidates[0].content.parts.length > 0 &&
+                typeof result.candidates[0].content.parts[0].text === 'string'
+            ) {
+                return result.candidates[0].content.parts[0].text;
+            }
+
+            // Fallback to common fields like 'text' or 'message'
+            if (result && (result.text || result.message)) {
+                return result.text || result.message;
+            }
+
+            console.error('Unexpected API response:', result);
+            throw new Error('Invalid response structure from API.');
+        }
+        
+        // Initial focus on the input field
+        userInput.focus();
+    </script>
+
+</body>
+</html>
